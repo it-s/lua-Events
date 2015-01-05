@@ -1,25 +1,23 @@
 local Events = {}
 
-function Events.new ()
+function Events.extend (base)
 
-	local self = {
-		_events = {},
-	}
+	base['_events'] = {},
 
-	function self:addEventListener(eventType, func)
+	function base:addEventListener(eventType, func)
 		if type( func ) ~= "function" then return false end
 		if not self._events then self._events = {} end
 		if not self._events[eventType] then self._events[eventType] = {} end
 		table.insert( self._events[eventType], func )
 		return self
 	end
-	function self:removeEventListener(eventType, func)
+	function base:removeEventListener(eventType, func)
 		if type( func ) ~= "function" then return false end
 		if not self._events then return false end
 		table.remove( self._events[eventType], func )
 		return self
 	end
-	function self:removeEventListeners(eventType)
+	function base:removeEventListeners(eventType)
 		if not self._events then return end
 		if not eventType then
 			self._events = {}
@@ -30,7 +28,7 @@ function Events.new ()
 		end
 		return self
 	end
-	function self:dispatchEvent(params)
+	function base:dispatchEvent(params)
 		if not params then return false end
 		if not self._events then return false end
 		-- FN.log ("Dispatching event " .. params.name .. " from " .. params.resourceName)
@@ -44,7 +42,7 @@ function Events.new ()
 		return self
 	end
 
-	return self
+	return base
 end
 
 return Events
