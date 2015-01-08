@@ -47,3 +47,7 @@ or use the power of LUA and create your object on the fly:
 ```lua
   object:removeEventListeners(identifierString)
 ```
+###Remove all event listeners
+```lua
+  object:removeEventListeners()
+```
