@@ -5,6 +5,8 @@ local ipairs = ipairs
 local Events = {}
 
 function Events.extend (base)
+	
+	base = base or {}
 
 	base['_events'] = {},
 
