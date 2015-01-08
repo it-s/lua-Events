@@ -31,11 +31,19 @@ or use the power of LUA and create your object on the fly:
   })
 ```
 ##Using the event manager
-###Creating an event listener:
+###Creating an event listener
 ```lua
   object:addEventListener(identifierString, functionToExecute)
 ```
-###Dispatching an event:
+###Dispatching an event
 ```lua
   object:dispatchEvent(params)
+```
+###Removing an event listener
+```lua
+  object:removeEventListener(identifierString, functionToExecute)
+```
+###Remove all event listeners of type
+```lua
+  object:removeEventListeners(identifierString)
 ```
