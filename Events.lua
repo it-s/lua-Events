@@ -15,8 +15,14 @@ local Events = {}
 function Events.extend (base)
         
         base = base or {}
-
-        base['_events'] = {},
+        base['_events'] = {}
+        
+        local function findEventListener(stack, fn)
+          for i, event in ipairs(stack) do
+                if event == fn then return i end
+          end
+          return false
+        end
 
         function base:addEventListener(eventType, func)
                 if type( func ) ~= "function" then return false end
@@ -28,17 +34,18 @@ function Events.extend (base)
         function base:removeEventListener(eventType, func)
                 if type( func ) ~= "function" then return false end
                 if not self._events then return false end
-                remove( self._events[eventType], func )
-                return self
+                if not self._events[eventType] then return false end
+                local i = findEventListener(self._events[eventType], func)
+                if not i then return false end
+                return remove( self._events[eventType], i )
         end
         function base:removeEventListeners(eventType)
                 if not self._events then return end
                 if not eventType then
                         self._events = {}
                 else
-                        for key, value in pairs(self._events) do
-                                self:removeEventListeners(key)
-                        end
+                        if not self._events[eventType] then return false end
+                        self._events[eventType] = {}
                 end
                 return self
         end
@@ -47,7 +54,7 @@ function Events.extend (base)
                 if not self._events then return false end
                 local events = self._events[params.name]
                 if events and #events > 0 then
-                  for i, event in ipairs(#events)
+                  for i, event in ipairs(events) do
                         if type( event == "function" ) then event(params) end
                   end
                 end
