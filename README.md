@@ -35,33 +35,39 @@ or use the power of LUA and create your object on the fly:
 ```lua
   object:addEventListener(identifierString, functionToExecute)
 ```
-* #identifierString# - name of en event to watch for as String
-* #functionToExecute# - a function to fire when event is called
+- *identifierString* - name of en event to watch for as String
+- *functionToExecute* - a function to execute when event is called
 ```lua
-  function fn(params){
-    print (params.eventName) -- params object always has 'eventName' element containing the name of the event
+  function fn(eventName, params){
+    print (eventName)
+    -- params can be anything you wish
+    -- they get passed to the listeneer by the dispatchEvent function
   }
 ```
 ###Dispatching an event
 ```lua
   object:dispatchEvent(identifierString, params)
 ```
-####Event params
+- *identifierString* - name of en event to fire
+- *params* - a table object containing arbitrary params that will be passed along to the listener function
 ```lua
+  object:dispatchEvent('eventName', 
   {
-    name = "eventName",
     -- this element is required
     someData = ...
-  }
+  })
 ```
 ###Removing an event listener
 ```lua
   object:removeEventListener(identifierString, functionToExecute)
 ```
+- *identifierString* - name of en event to watch for as String
+- *functionToExecute* - a function to execute that you wish to remove from stack
 ###Remove all event listeners of type
 ```lua
   object:removeEventListeners(identifierString)
 ```
+- *identifierString* - name of en event to watch for as String
 ###Remove all event listeners
 ```lua
   object:removeEventListeners()
