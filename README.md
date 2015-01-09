@@ -35,9 +35,24 @@ or use the power of LUA and create your object on the fly:
 ```lua
   object:addEventListener(identifierString, functionToExecute)
 ```
+* #identifierString# - name of en event to watch for as String
+* #functionToExecute# - a function to fire when event is called
+```lua
+  function fn(params){
+    print (params.eventName) -- params object always has 'eventName' element containing the name of the event
+  }
+```
 ###Dispatching an event
 ```lua
-  object:dispatchEvent(params)
+  object:dispatchEvent(identifierString, params)
+```
+####Event params
+```lua
+  {
+    name = "eventName",
+    -- this element is required
+    someData = ...
+  }
 ```
 ###Removing an event listener
 ```lua
