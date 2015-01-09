@@ -49,13 +49,13 @@ function Events.extend (base)
                 end
                 return self
         end
-        function base:dispatchEvent(params)
-                if not params then return false end
+        function base:dispatchEvent(eventType, params)
+                if not eventType then return false end
                 if not self._events then return false end
-                local events = self._events[params.name]
+                local events = self._events[eventType]
                 if events and #events > 0 then
                   for i, event in ipairs(events) do
-                        if type( event == "function" ) then event(params) end
+                        if type( event == "function" ) then event(eventType, params) end
                   end
                 end
                 return self
